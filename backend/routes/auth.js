@@ -96,15 +96,16 @@ router.post(
 
 //Get logged in user details. Login Required
 
-router.post("/getUser",fetchuser, async (req, res) => {
+router.post("/getuser", fetchuser, async (req, res) => {
   try {
     let userID = req.user.id;
     const user = await User.findById(userID).select("-password");
-    res.send(user)
+    res.json(user); // Changed send to json
   } catch (error) {
-    res.status(500).send("Some Error Internally");
-    console.error(error);
+    res.status(500).json({ error: "Internal server error", details: error.message });
+    console.error("Error fetching user:", error.stack);
   }
 });
+
 
 module.exports = router;
