@@ -15,6 +15,7 @@ let getuser = (req, res, next) => {
         res.status(401).send({ error: "Invalid token" });
         console.error(error);
     }
+    
 };
 
 module.exports = getuser;
