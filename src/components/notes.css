@@ -1,0 +1,6 @@
+.note-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Adjust this value to increase/decrease the space between cards */
+    justify-content: space-between;
+}

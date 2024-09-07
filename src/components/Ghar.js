@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import noteContext from "../context/notes/noteContext";
+import Notes from "./Notes";
 
 function Ghar() {
-  const context=useContext(noteContext);
-  const {notes,setNotes}=context;
+  
 
   return (
     <div className="container">
@@ -69,12 +69,9 @@ function Ghar() {
           </div>
         </div>
       </div>
-      <h2> View your Notes </h2>
-      {
-        notes.map((note)=>{
-          return note.title;
-        })
-      }
+      <Notes>
+
+      </Notes>
     </div>
   );
 }
