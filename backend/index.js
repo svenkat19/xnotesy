@@ -6,7 +6,7 @@ const port = 5000
 
 app.use(express.json());
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`XNotesy listening on port ${port}`)
 })
 
 app.use('/api/auth',require("./routes/auth"))
