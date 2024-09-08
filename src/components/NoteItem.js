@@ -1,7 +1,9 @@
-import React from 'react'
-
+import React, { useContext } from 'react'
+import noteContext from '../context/notes/noteContext';
 const NoteItem = (props) => {
     const { note } = props;
+    const context=useContext(noteContext);
+    const { deleteNote } = context;
     return (
         <div className="note-item card mb-3" style={{ width: '18rem', backgroundColor: '#fffacd', padding: '10px', borderRadius: '10px' }}>
             <div className="card-body">
@@ -12,7 +14,10 @@ const NoteItem = (props) => {
                 {note.date}
             </div>
             <div className="card-body">
-                <button className="btn btn-primary">Butttext</button>
+            <i className="fa-solid fa-square-minus mx-2" onClick={()=>{
+                deleteNote(note._id);
+            }}></i>
+            <i className="fa-solid fa-pen-fancy mx-2"></i>
             </div>
         </div>
     )
