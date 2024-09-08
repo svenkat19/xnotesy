@@ -5,7 +5,11 @@ const AddNote = () => {
   const context = useContext(noteContext);
   const { addNote } = context;
 
-  const [note, setNote] = useState({ title: "", description: "", tag: "default" });
+  const [note, setNote] = useState({
+    title: "",
+    description: "",
+    tag: "default",
+  });
 
   const handleOnClick = (event) => {
     event.preventDefault();
@@ -41,6 +45,8 @@ const AddNote = () => {
                       value={note.title} // Bind the input value to the state
                       placeholder="Enter your title"
                       onChange={onChange}
+                      minLength={5}
+                      required
                     />
                   </div>
                   <div className="mb-3">
@@ -55,6 +61,8 @@ const AddNote = () => {
                       value={note.description} // Bind the input value to the state
                       placeholder="Enter your Description"
                       onChange={onChange}
+                      minLength={5}
+                      required
                     />
                   </div>
                   <div className="mb-3">
@@ -69,12 +77,15 @@ const AddNote = () => {
                       value={note.tag} // Bind the input value to the state
                       placeholder="Enter your Tag"
                       onChange={onChange}
+                      minLength={5}
+                      required
                     />
                   </div>
                   <button
                     type="submit"
                     className="btn btn-primary w-100"
                     onClick={handleOnClick}
+                    disabled={note.title.length<5 || note.description.length<5||note.tag.length<5}
                   >
                     Add Note
                   </button>
