@@ -23,7 +23,7 @@ const Login = () => {
       
       if (json.success){
         //redirecr
-        localStorage.setItem('token',json.authtoken)
+        localStorage.setItem('token',json.token)
         navigate("/");
       }else{
         alert("Invalid Credentials")

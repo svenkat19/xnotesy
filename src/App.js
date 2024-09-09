@@ -9,7 +9,8 @@ import Signup from "./components/Signup";
 import { useState } from "react";
 
 function App() {
-  
+  if(localStorage.getItem('token'))
+    localStorage.removeItem('token');
   return (
     <NoteState>
       <BrowserRouter>

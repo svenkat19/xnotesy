@@ -2,9 +2,11 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import noteContext from "../context/notes/noteContext";
 import NoteItem from "./NoteItem";
 import AddNote from "./AddNote";
+import { useNavigate } from "react-router-dom";
 
 const Notes = () => {
   const context = useContext(noteContext);
+  let navigator = useNavigate();
   const { notes, getNotes, editNote } = context;
   const [note, setNote] = useState({
     id: "",
@@ -14,7 +16,12 @@ const Notes = () => {
   });
 
   useEffect(() => {
-    getNotes();
+    console.log(localStorage.getItem('token'))
+    if (localStorage.getItem("token")) {
+      getNotes();
+    } else {
+      navigator("/login");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const ref = useRef(null);
@@ -31,7 +38,7 @@ const Notes = () => {
 
   const handleOnClick = (event) => {
     event.preventDefault();
-     editNote(note.id, note.etitle, note.edescription, note.etag);
+    editNote(note.id, note.etitle, note.edescription, note.etag);
     refClose.current.click();
   };
 
@@ -157,7 +164,11 @@ const Notes = () => {
                 type="button"
                 onClick={handleOnClick}
                 className="btn btn-primary"
-                disabled={note.etitle.length<5 || note.edescription.length<5||note.etag.length<5}
+                disabled={
+                  note.etitle.length < 5 ||
+                  note.edescription.length < 5 ||
+                  note.etag.length < 5
+                }
               >
                 Save changes
               </button>
