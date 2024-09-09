@@ -20,16 +20,17 @@ router.post(
     // res.json(req.body);
 
     //If there is an error, return error and Bad Request
+    let success = false;
     try {
       const error = validationResult(req);
       if (!error.isEmpty()) {
-        return res.status(400).json({ errors: error.array() });
+        return res.status(400).json({ success, errors: error.array() });
       }
       let user = await User.findOne({ email: req.body.email });
       if (user) {
         return res
           .status(400)
-          .json({ errors: "Sorry a user with this mail ID exists" });
+          .json({ success, errors: "Sorry a user with this mail ID exists" });
       }
 
       const salt = await bcrypt.genSalt(10);
@@ -48,11 +49,11 @@ router.post(
         },
       };
       const authToken = jwt.sign(data, JWT_SECRET);
-
-      res.json({ authToken });
+      success = true;
+      res.json({ success, authToken });
     } catch (error) {
       res.status(500).send("Some Error");
-      console.error(error);
+      console.error(success, error);
     }
   }
 );
