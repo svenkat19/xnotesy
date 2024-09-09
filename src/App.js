@@ -6,8 +6,10 @@ import Ghar from "./components/Ghar";
 import NoteState from "./context/notes/NoteState";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import { useState } from "react";
 
 function App() {
+  
   return (
     <NoteState>
       <BrowserRouter>

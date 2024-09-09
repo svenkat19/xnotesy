@@ -28,6 +28,9 @@ const Signup = () => {
       const json = await response.json();
       if (json.success) {
         localStorage.setItem("token", json.authtoken);
+        setTimeout(() => {
+          alert("Account Created Successfully")
+        }, 1);
         navigate("/login");
       } else {
         console.log(json);
