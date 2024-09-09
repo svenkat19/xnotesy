@@ -48,6 +48,7 @@ router.post(
         },
       };
       const authToken = jwt.sign(data, JWT_SECRET);
+
       res.json({ authToken });
     } catch (error) {
       res.status(500).send("Some Error");
@@ -65,6 +66,7 @@ router.post(
     body("password", "Password cannot be blank").exists(),
   ],
   async (req, res) => {
+    let success = false;
     const error = validationResult(req);
     if (!error.isEmpty()) {
       return res.status(400).json({ errors: error.array() });
@@ -74,19 +76,21 @@ router.post(
     try {
       let user = await User.findOne({ email: email });
       if (!user) {
-        return res.status(400).json({ errors: "Wrong Credentials" });
+        return res.status(400).json({ success, errors: "Wrong Credentials" });
       }
       const passwordCompare = await bcrypt.compare(password, user.password);
       if (!passwordCompare) {
-        return res.status(400).json({ errors: "Wrong Credentials" });
+        return res.status(400).json({ success, errors: "Wrong Credentials" });
       }
       const data = {
         user: {
           id: user.id,
         },
       };
+
       const authToken = jwt.sign(data, JWT_SECRET);
-      res.json({ authToken });
+      success = true;
+      res.json({ success, authToken });
     } catch (error) {
       res.status(500).send("Some Error Internally");
       console.error(error);
@@ -102,10 +106,11 @@ router.post("/getuser", fetchuser, async (req, res) => {
     const user = await User.findById(userID).select("-password");
     res.json(user); // Changed send to json
   } catch (error) {
-    res.status(500).json({ error: "Internal server error", details: error.message });
+    res
+      .status(500)
+      .json({ error: "Internal server error", details: error.message });
     console.error("Error fetching user:", error.stack);
   }
 });
-
 
 module.exports = router;
